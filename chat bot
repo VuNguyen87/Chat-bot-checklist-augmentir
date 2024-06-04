@@ -1,0 +1,429 @@
+let ss = SpreadsheetApp.getActiveSpreadsheet();
+let setup = ss.getSheetByName("Push noti");
+let dayOff = ss.getSheetByName("day off");
+function chatBot_ThangChuA() {
+  let lastRow = setup.getRange('A12').getDataRegion().getLastRow();
+  console.log(lastRow)
+  try {
+    let value = setup.getRange('B12').getValue();
+    if (value !== "") {
+      for (i = 12; i <= lastRow; i++) {
+        let thangName = setup.getRange('A' + i).getValue();
+        const urlBot = 'https://chat.googleapis.com/v1/spaces/AAAAIGBUOjE/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=AJP7A3VJqAnhQEmJFFlgBpVLXxsimOLV_au9BcS1Z_U';
+        //const urlBot = 'https://chat.googleapis.com/v1/spaces/AAAAJNVbkgA/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=mH5dDxOrXHw-QuzU-hcnri29KHo9zAFrN2LljLp5mgg';
+        // Nội dung cần chat 
+        const Content = 'Xin Chào, \nThang chữ A: - ' + thangName + ', chưa được Checklist. \n🙏 Vui lòng kiểm tra lại!';
+        // Code cố định không thay đổi các từ khóa bên trong, chỉ thay biến ở dòng text:
+        UrlFetchApp.fetch(urlBot, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          payload: JSON.stringify({
+            text: Content
+          })
+        })
+      }
+      return;
+    }
+  } catch (e) {
+    MailApp.sendEmail('vu_nguyen@colpal.com', 'Thông báo lỗi code chatBot_ThangChuA', 'Chi tiết lỗi :' + e);
+  }
+  return;
+}
+/*/********************************************************************* */
+
+function chatBot_SpillKit() {
+  let lastRow = setup.getRange('G12').getDataRegion().getLastRow();
+  console.log(lastRow)
+  try {
+    let value = setup.getRange('H12').getValue();
+    if (value !== "") {
+      for (i = 12; i <= lastRow; i++) {
+        let khuVuc = setup.getRange('G' + i).getValue();
+        const urlBot = 'https://chat.googleapis.com/v1/spaces/AAAAIGBUOjE/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=AJP7A3VJqAnhQEmJFFlgBpVLXxsimOLV_au9BcS1Z_U';
+        //const urlBot = 'https://chat.googleapis.com/v1/spaces/AAAAJNVbkgA/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=mH5dDxOrXHw-QuzU-hcnri29KHo9zAFrN2LljLp5mgg';
+        // Nội dung cần chat 
+        const Content = 'Xin Chào, \nChecklist Spill Kit khu vực:  - ' + khuVuc + ', chưa được Checklist. \n🙏 Vui lòng kiểm tra lại!';
+        // Code cố định không thay đổi các từ khóa bên trong, chỉ thay biến ở dòng text:
+        UrlFetchApp.fetch(urlBot, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          payload: JSON.stringify({
+            text: Content
+          })
+        })
+      }
+      return;
+    }
+  } catch (e) {
+    MailApp.sendEmail('vu_nguyen@colpal.com', 'Thông báo lỗi code chatBot_SpillKit', 'Chi tiết lỗi :' + e);
+  }
+  return;
+}
+//****************************************************************** */
+
+// function chatbot_OE() {
+//   let ss = SpreadsheetApp.getActiveSpreadsheet();
+//   let setup = ss.getSheetByName("noti_OE");
+//   let data = setup.getDataRange().getValues();
+//   let currentDate = new Date();
+//   let Avals = setup.getRange("B1:B").getValues();
+//   let lastRow = Avals.filter(String).length;
+//   let weekNumber = getWeekNumber(currentDate);
+//   let filteredData = data.filter(function (row) {
+//     let date = row[0];
+//     let source = row[2];
+//     let user = row[1];
+//     let week = row[14]
+//     // Kiểm tra nếu ngày là ngày hiện tại và source là "Self Assessment"
+//     return (weekNumber === week) && (source === "Self Assessment");
+//   });
+//   let dem = filteredData.map(function (row) {
+//     return row[1]
+//   }).length;
+//     console.log(dem)
+//   let lost = 4 - dem;
+//   if( lost !== 0){
+//   ///  In kết quả
+//   // Lấy dữ liệu từ cột "User" và kết hợp với điều kiện xuống hàng
+//   let result = filteredData.map(function (row) {
+//     return "✅ " + row[1]; // Lấy giá trị cột "User"
+//   }).join("\n"); // Kết hợp thành chuỗi với điều kiện xuống hàng
+//   const urlBot = 'https://chat.googleapis.com/v1/spaces/AAAAIGBUOjE/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=AJP7A3VJqAnhQEmJFFlgBpVLXxsimOLV_au9BcS1Z_U';
+//   //const urlBot = 'https://chat.googleapis.com/v1/spaces/AAAAJNVbkgA/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=mH5dDxOrXHw-QuzU-hcnri29KHo9zAFrN2LljLp5mgg';
+//   // Nội dung cần chat 
+//   const Content = 'Xin Chào, \nLịch chấm OE tuần này có ' + lost + ' khu vực CHƯA ĐƯỢC THỰC HIỆN.\nDưới đây là danh sách đã hoàn thành:\n' + result+'.\n🙏 Vui lòng cập nhật & bổ sung!';
+//  // Code cố định không thay đổi các từ khóa bên trong, chỉ thay biến ở dòng text:
+//   UrlFetchApp.fetch(urlBot, {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json',
+//     },
+//     payload: JSON.stringify({
+//       text: Content
+//     })
+//   })
+//   }
+// }
+//****************************************************************** */
+function chatbot_OPL() {
+  let ss = SpreadsheetApp.getActiveSpreadsheet();
+  let setup = ss.getSheetByName("master_OPL");
+  let data = setup.getDataRange().getValues();
+  let currentDate = new Date();
+  let currentMonth = currentDate.getMonth() + 1; // Lấy tháng hiện tại (1-12)
+  let filteredData = data.filter(function (row) {
+    let khuVuc = row[16];
+    let date = new Date(row[0]);
+    let month = date.getMonth() + 1; // Lấy tháng từ cột ngày (1-12)
+    console.log(currentMonth)
+    return khuVuc === "WH" && month === currentMonth;
+  });
+  let result = filteredData.length > 0 ? filteredData.length.toString() : "0"; // Gán số dòng cho biến kết quả, nếu không tìm thấy dữ liệu, gán giá trị "0"
+  const urlBot = 'https://chat.googleapis.com/v1/spaces/AAAAIGBUOjE/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=AJP7A3VJqAnhQEmJFFlgBpVLXxsimOLV_au9BcS1Z_U';
+  //const urlBot = 'https://chat.googleapis.com/v1/spaces/AAAAJNVbkgA/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=mH5dDxOrXHw-QuzU-hcnri29KHo9zAFrN2LljLp5mgg';
+  // Nội dung cần chat 
+  const Content = 'Xin Chào,\n📆 Tháng ' + currentMonth + ' chưa có bài học 1 điểm được chia sẻ.\n🙏 Vui lòng cập nhật & bổ sung!'
+  // Code cố định không thay đổi các từ khóa bên trong, chỉ thay biến ở dòng text:
+  UrlFetchApp.fetch(urlBot, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    payload: JSON.stringify({
+      text: Content
+    })
+  })
+}
+
+/*/********************************************************************* */
+
+function chatBot_CauTruc() {
+  try {
+    let value1 = setup.getRange('E3').getValue();
+    let value2 = setup.getRange('E4').getValue();
+    let khuVuc1 = setup.getRange('D3').getValue();
+    let khuVuc2 = setup.getRange('D4').getValue();
+    if (value1 == 0) {
+      // const urlBot = 'https://chat.googleapis.com/v1/spaces/AAAAIGBUOjE/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=AJP7A3VJqAnhQEmJFFlgBpVLXxsimOLV_au9BcS1Z_U';
+      const urlBot = 'https://chat.googleapis.com/v1/spaces/AAAAJNVbkgA/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=mH5dDxOrXHw-QuzU-hcnri29KHo9zAFrN2LljLp5mgg';
+      // Nội dung cần chat 
+      const Content1 = 'Xin Chào, \nChecklist Cẩu trục:    ' + khuVuc1 + ' ➣ Chưa được Checklist. \n🙏 Vui lòng kiểm tra lại! \n ▄︻̷̿┻̿═━一  웃  $$$$$$$';
+      UrlFetchApp.fetch(urlBot, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        payload: JSON.stringify({
+          text: Content1
+        })
+      })
+    }
+    if (value2 == 0) {
+      // const urlBot = 'https://chat.googleapis.com/v1/spaces/AAAAIGBUOjE/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=AJP7A3VJqAnhQEmJFFlgBpVLXxsimOLV_au9BcS1Z_U';
+      const urlBot = 'https://chat.googleapis.com/v1/spaces/AAAAJNVbkgA/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=mH5dDxOrXHw-QuzU-hcnri29KHo9zAFrN2LljLp5mgg';
+      // Nội dung cần chat 
+      const Content2 = 'Xin Chào, \nChecklist Cẩu trục:    ' + khuVuc2 + ' ➣ Chưa được Checklist. \n🙏 Vui lòng kiểm tra lại! \n \n ▄︻̷̿┻̿═━一  웃  $$$$$$$';
+      UrlFetchApp.fetch(urlBot, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        payload: JSON.stringify({
+          text: Content2
+        })
+      })
+      return;
+    }
+  } catch (e) {
+    MailApp.sendEmail('vu_nguyen@colpal.com', 'Thông báo lỗi code chatBot_CauTruc', 'Chi tiết lỗi :' + e);
+  }
+  return;
+}
+
+/*/********************************************************************* */
+
+function chatBot_Oe() {
+  let lastRow = setup.getRange('J12').getDataRegion().getLastRow();
+  console.log(lastRow)
+  try {
+    let value = setup.getRange('K12').getValue();
+    if (value !== "") {
+      for (i = 12; i <= lastRow; i++) {
+        let khuVuc = setup.getRange('J' + i).getValue();
+        const urlBot = 'https://chat.googleapis.com/v1/spaces/AAAAIGBUOjE/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=AJP7A3VJqAnhQEmJFFlgBpVLXxsimOLV_au9BcS1Z_U';
+        //const urlBot = 'https://chat.googleapis.com/v1/spaces/AAAAJNVbkgA/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=mH5dDxOrXHw-QuzU-hcnri29KHo9zAFrN2LljLp5mgg';
+        // Nội dung cần chat 
+        const Content = 'Xin Chào, \nChấm điểm OE khu vực:   <' + khuVuc + '>, chưa được thực hiện. \n🙏 Vui lòng kiểm tra và cập nhật bổ sung!';
+        // Code cố định không thay đổi các từ khóa bên trong, chỉ thay biến ở dòng text:
+        UrlFetchApp.fetch(urlBot, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          payload: JSON.stringify({
+            text: Content
+          })
+        })
+      }
+      return;
+    }
+  } catch (e) {
+    MailApp.sendEmail('vu_nguyen@colpal.com', 'Thông báo lỗi code chatBot_Oe', 'Chi tiết lỗi :' + e);
+  }
+  return;
+}
+
+//***************************************************************************************************************************************/
+
+function chatBot_ChecklistSanKho() {
+  let today = new Date();
+  let day = today.getDay();
+  if (day !== 0) {
+    try {
+      const sh = SpreadsheetApp.getActiveSpreadsheet();
+      const sheet1 = sh.getSheetByName("Push noti");
+      let value = sheet1.getRange('E2').getValue();
+      if (value == 0) {
+        //  const urlBot = 'https://chat.googleapis.com/v1/spaces/AAAAIGBUOjE/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=AJP7A3VJqAnhQEmJFFlgBpVLXxsimOLV_au9BcS1Z_U';
+        const urlBot = 'https://chat.googleapis.com/v1/spaces/AAAAJNVbkgA/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=mH5dDxOrXHw-QuzU-hcnri29KHo9zAFrN2LljLp5mgg';
+        // Nội dung cần chat 
+        const Content = 'Xin Chào, \nPhiếu kiểm tra sân kho chưa được thực hiện. \n🙏 Vui lòng kiểm tra lại!';
+        // Code cố định không thay đổi các từ khóa bên trong, chỉ thay biến ở dòng text:
+        UrlFetchApp.fetch(urlBot, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          payload: JSON.stringify({
+            text: Content
+          })
+        })
+      }
+      return;
+    } catch (e) {
+      MailApp.sendEmail('vu_nguyen@colpal.com', 'Thông báo lỗi code chatBot_ChecklistSanKho', 'Chi tiết lỗi :' + e);
+    }
+    return;
+  }
+}
+//***************************************************************************************************************************************/
+// function ChatBot_ChecklistForklift_Nodata() {
+//   let today = new Date();
+//   let day = today.getDay();
+//   if (day !== 0) {
+//     try {
+
+//       const sh = SpreadsheetApp.getActiveSpreadsheet();
+//       const sheet1 = sh.getSheetByName("Push noti");
+//       let value = sheet1.getRange('J23').getValue();
+//       let lastRow = sheet1.getRange('J23').getDataRegion().getLastRow();
+//       console.log(lastRow)
+//       if (value !== "") {
+//         for (i = 23; i <= lastRow; i++) {
+//           let xe = sheet1.getRange('G' + i).getValue();
+//           let ca = sheet1.getRange('I' + i).getValue();
+
+//           const urlBot = 'https://chat.googleapis.com/v1/spaces/AAAAIGBUOjE/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=AJP7A3VJqAnhQEmJFFlgBpVLXxsimOLV_au9BcS1Z_U';
+//           // const urlBot = 'https://chat.googleapis.com/v1/spaces/AAAAJNVbkgA/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=mH5dDxOrXHw-QuzU-hcnri29KHo9zAFrN2LljLp5mgg';
+//           // Nội dung cần chat 
+//           const Content = 'Xin Chào, \nXe số: ' + xe + ', nhóm: ' + ca + ', chưa được Checklist xe nâng đầu ca. \n🙏 Vui lòng kiểm tra lại!';
+//           // Code cố định không thay đổi các từ khóa bên trong, chỉ thay biến ở dòng text:
+//           UrlFetchApp.fetch(urlBot, {
+//             method: 'POST',
+//             headers: {
+//               'Content-Type': 'application/json',
+//             },
+//             payload: JSON.stringify({
+//               text: Content
+//             })
+//           })
+//         }
+//         return;
+//       }
+//     } catch (e) {
+//       MailApp.sendEmail('vu_nguyen@colpal.com', 'Thông báo lỗi code ChatBot_ChecklistXeNang_Nodata', 'Chi tiết lỗi :' + e);
+//     }
+//     return;
+//   }
+// }
+
+function chatBot_ChecklistForklift_Nodata() {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Push noti");
+  var dataRange = sheet.getRange('Q2:R17'); // Chỉ lấy 2 cột Q và R
+  var values = dataRange.getValues();
+  var numRows = values.length;
+  var selectedRows = [];
+  let today = new Date();
+  let day = today.getDay();
+  if (day !== 0) {
+    try {
+      for (var i = 0; i < numRows; i++) {
+        if (values[i][values[i].length - 1] === "No data") {
+          selectedRows.push("- Xe " + values[i].join(' ')); // Thêm chữ "xe" ở đầu và ghép các giá trị thành một chuỗi
+        }
+      }
+      console.log(selectedRows.length);
+      var jsonResult = selectedRows.join("\n");
+      if (selectedRows.length > 0) {
+      const urlBot = 'https://chat.googleapis.com/v1/spaces/AAAAIGBUOjE/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=AJP7A3VJqAnhQEmJFFlgBpVLXxsimOLV_au9BcS1Z_U';
+       //  const urlBot = 'https://chat.googleapis.com/v1/spaces/AAAAJNVbkgA/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=mH5dDxOrXHw-QuzU-hcnri29KHo9zAFrN2LljLp5mgg';
+        // Nội dung cần chat 
+        const Content = 'Xin Chào, \nDưới đây là danh sách các xe chưa được Checklist.\n' + jsonResult + ' \n🙏 Vui lòng kiểm tra lại!';
+        // Code cố định không thay đổi các từ khóa bên trong, chỉ thay biến ở dòng text:
+        UrlFetchApp.fetch(urlBot, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          payload: JSON.stringify({
+            text: Content
+          })
+        })
+      }
+      return;
+    } catch (e) {
+      MailApp.sendEmail('vu_nguyen@colpal.com', 'Thông báo lỗi code ChatBot_ChecklistXeNang_Nodata', 'Chi tiết lỗi :' + e);
+    }
+    return;
+  }
+}
+
+//*-********************************************************************///
+function chatBot_ChecklistRack() {
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Push noti"); // Thay "Tên_Bảng" bằng tên bảng dữ liệu của bạn
+  var dataRange = sheet.getRange("U3:V5");
+  var values = dataRange.getValues();
+  var numRows = values.length;
+  var group = sheet.getRange("V2").getValue();
+  var selectedRows = [];
+ let today = new Date();
+  let day = today.getDay();
+  if (day !== 0) {
+    try {
+  
+  for (var i = 0; i < numRows; i++) {
+    var lastColumnValue = values[i][values[i].length - 1];
+    if (lastColumnValue === 0) {
+          selectedRows.push('- '+values[i][0]);
+    }
+  }
+var jsonResult = selectedRows.join("\n")
+      if (selectedRows.length > 0) {
+       // const urlBot = 'https://chat.googleapis.com/v1/spaces/AAAAIGBUOjE/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=AJP7A3VJqAnhQEmJFFlgBpVLXxsimOLV_au9BcS1Z_U';
+         const urlBot = 'https://chat.googleapis.com/v1/spaces/AAAAJNVbkgA/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=mH5dDxOrXHw-QuzU-hcnri29KHo9zAFrN2LljLp5mgg';
+        // Nội dung cần chat 
+        const Content = 'Xin Chào, \nDưới đây là danh sách các KỆ chưa được Checklist.\n' + jsonResult + ' \nNhóm phụ trách: '+group+'\n🙏 Vui lòng kiểm tra lại!';
+        // Code cố định không thay đổi các từ khóa bên trong, chỉ thay biến ở dòng text:
+        UrlFetchApp.fetch(urlBot, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          payload: JSON.stringify({
+            text: Content
+          })
+        })
+      }
+      return;
+  Logger.log(jsonResult);
+
+   } catch (e) {
+      MailApp.sendEmail('vu_nguyen@colpal.com', 'Thông báo lỗi code ChatBot_ChecklistRack', 'Chi tiết lỗi :' + e);
+    }
+    return;
+  }
+}
+//*-********************************************************************///
+function chatBot_ApproveForklift_Rack() {
+var valueForklift = setup.getRange("S18").getValue();  // lấy giá trị phiếu xe chưa duyệt
+var valueRack = setup.getRange("V18").getValue();  // lấy giá trị phiếu kệ chưa duyệt
+ let today = new Date();
+  let day = today.getDay();
+  if (day !== 0) {
+    try {
+      if (valueForklift > 0) {
+       // const urlBot = 'https://chat.googleapis.com/v1/spaces/AAAAIGBUOjE/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=AJP7A3VJqAnhQEmJFFlgBpVLXxsimOLV_au9BcS1Z_U';
+        const urlBot = 'https://chat.googleapis.com/v1/spaces/AAAAY0-w-lo/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=cTVxb4he2vJXWgaUQN4P_ttYFXTLrAiXjDCBXQFaCHY';
+        // Nội dung cần chat 
+        const Content = 'Xin Chào, \nCó '+valueForklift+' Phiếu checklist xe nâng hằng ngày chưa được duyệt.\n🙏 Vui lòng kiểm tra lại!';
+        // Code cố định không thay đổi các từ khóa bên trong, chỉ thay biến ở dòng text:
+        UrlFetchApp.fetch(urlBot, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          payload: JSON.stringify({
+            text: Content
+          })
+        })
+      }
+        if (valueRack > 0) {
+        //const urlBot = 'https://chat.googleapis.com/v1/spaces/AAAAIGBUOjE/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=AJP7A3VJqAnhQEmJFFlgBpVLXxsimOLV_au9BcS1Z_U';
+         const urlBot = 'https://chat.googleapis.com/v1/spaces/AAAAY0-w-lo/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=cTVxb4he2vJXWgaUQN4P_ttYFXTLrAiXjDCBXQFaCHY';
+        // Nội dung cần chat 
+        const Content = 'Xin Chào, \nCó '+valueRack+' Phiếu checklist Kệ hằng ngày chưa được duyệt.\n🙏 Vui lòng kiểm tra lại!';
+        // Code cố định không thay đổi các từ khóa bên trong, chỉ thay biến ở dòng text:
+        UrlFetchApp.fetch(urlBot, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          payload: JSON.stringify({
+            text: Content
+          })
+        })
+      }
+      return;
+  console.log(valueForklift,valueRack)
+
+   } catch (e) {
+      MailApp.sendEmail('vu_nguyen@colpal.com', 'Thông báo lỗi code chatBot_ApproveForklift_Rack', 'Chi tiết lỗi :' + e);
+    }
+    return;
+  }
+}
+
