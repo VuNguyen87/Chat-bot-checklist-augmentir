@@ -1,0 +1,554 @@
+function updateOdata_CauTruc() {
+  // Get the Setup sheet
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var setup = ss.getSheetByName("Setup");
+  // Get the current username
+  var nameCell = setup.getRange('B1');
+  var pwdCell = setup.getRange('B2');
+  var urlCell = setup.getRange('B5');
+  var name = nameCell.getValue();
+  var pwd = pwdCell.getValue();
+  pwd = Utilities.base64Decode(pwd);
+  pwd = Utilities.newBlob(pwd).getDataAsString()
+  var id = ss.getId();
+  pwd = pwd.slice(id.length);
+  var url = urlCell.getValue();
+  // Get the OData raw data sheet
+  var odata = ss.getSheetByName("Cẩu trục");
+  var od = getJobHistory(nameCell.getValue(), pwd, urlCell.getValue());
+  if (od == undefined) return;
+  // Clear out old data
+  odata.getRange(1, 1, odata.getLastRow(), 48).clearContent();
+  var rawCell = odata.getRange(1, 2, od.length, od[0].length);
+  rawCell.setValues(od);
+  var lastRow = odata.getRange('D1').getDataRegion().getLastRow();
+  var range = odata.getRange('D2:D' + lastRow).getValues();
+  for (var i = 0; i < range.length; i++) {
+    var originalDate = range[i][0];
+    var date = new Date(originalDate);
+    var ictDate = Utilities.formatDate(date, "GMT+7", "MM/dd/yyyy");
+    odata.getRange('A' + (i + 2)).setValue(ictDate);
+  }
+}
+//***************************************************************************************************** */
+
+function updateOdata_SpillKit() {
+  // Get the Setup sheet
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var setup = ss.getSheetByName("Setup");
+  // Get the current username
+  var nameCell = setup.getRange('B1');
+  var pwdCell = setup.getRange('B2');
+  var urlCell = setup.getRange('B4');
+  var name = nameCell.getValue();
+  var pwd = pwdCell.getValue();
+  pwd = Utilities.base64Decode(pwd);
+  pwd = Utilities.newBlob(pwd).getDataAsString()
+  var id = ss.getId();
+  pwd = pwd.slice(id.length);
+  var url = urlCell.getValue();
+  // Get the OData raw data sheet
+  var odata = ss.getSheetByName("Spill kit");
+  var od = getJobHistory(nameCell.getValue(), pwd, urlCell.getValue());
+  if (od == undefined) return;
+  // Clear out old data
+  odata.getRange(1, 1, odata.getLastRow(), odata.getLastColumn()).clearContent();
+  var rawCell = odata.getRange(1, 2, od.length, od[0].length);
+  rawCell.setValues(od);
+  var lastRow = odata.getRange('D1').getDataRegion().getLastRow();
+  var range = odata.getRange('D2:D' + lastRow).getValues();
+  for (var i = 0; i < range.length; i++) {
+    var originalDate = range[i][0];
+    var date = new Date(originalDate);
+    var ictDate = Utilities.formatDate(date, "GMT+7", "MM/dd/yyyy");
+    odata.getRange('A' + (i + 2)).setValue(ictDate);
+  }
+}
+//***************************************************************************************************** */
+
+function updateOdata_ThangChuA() {
+  // Get the Setup sheet
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var setup = ss.getSheetByName("Setup");
+  // Get the current username
+  var nameCell = setup.getRange('B1');
+  var pwdCell = setup.getRange('B2');
+  var urlCell = setup.getRange('B6');
+  var name = nameCell.getValue();
+  var pwd = pwdCell.getValue();
+  pwd = Utilities.base64Decode(pwd);
+  pwd = Utilities.newBlob(pwd).getDataAsString()
+  var id = ss.getId();
+  pwd = pwd.slice(id.length);
+  var url = urlCell.getValue();
+  // Get the OData raw data sheet
+  var odata = ss.getSheetByName("Thang Chữ A");
+  var od = getJobHistory(nameCell.getValue(), pwd, urlCell.getValue());
+  if (od == undefined) return;
+  // Clear out old data
+  odata.getRange(1, 1, odata.getLastRow(), odata.getLastColumn()).clearContent();
+  var rawCell = odata.getRange(1, 2, od.length, od[0].length);
+  rawCell.setValues(od);
+  var lastRow = odata.getRange('D1').getDataRegion().getLastRow();
+  var range = odata.getRange('D2:D' + lastRow).getValues();
+  for (var i = 0; i < range.length; i++) {
+    var originalDate = range[i][0];
+    var date = new Date(originalDate);
+    var ictDate = Utilities.formatDate(date, "GMT+7", "MM/dd/yyyy");
+    odata.getRange('A' + (i + 2)).setValue(ictDate);
+  }
+}
+//***************************************************************************************************** */
+
+function updateOdata_OE() {
+  // Get the Setup sheet
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var setup = ss.getSheetByName("Setup");
+  // Get the current username
+  var nameCell = setup.getRange('B1');
+  var pwdCell = setup.getRange('B2');
+  var urlCell = setup.getRange('B7');
+  var name = nameCell.getValue();
+  var pwd = pwdCell.getValue();
+  pwd = Utilities.base64Decode(pwd);
+  pwd = Utilities.newBlob(pwd).getDataAsString()
+  var id = ss.getId();
+  pwd = pwd.slice(id.length);
+  var url = urlCell.getValue();
+  // Get the OData raw data sheet
+  var odata = ss.getSheetByName("master_OE");
+  var od = getJobHistory(nameCell.getValue(), pwd, urlCell.getValue());
+  if (od == undefined) return;
+  // Clear out old data
+  odata.getRange(1, 1, odata.getLastRow(), 213).clearContent();
+  var rawCell = odata.getRange(1, 2, od.length, od[0].length);
+  rawCell.setValues(od);
+  var lastRow = odata.getRange('D1').getDataRegion().getLastRow();
+  var range = odata.getRange('D2:D' + lastRow).getValues();
+  for (var i = 0; i < range.length; i++) {
+    var originalDate = range[i][0];
+    var date = new Date(originalDate);
+    var ictDate = Utilities.formatDate(date, "GMT+7", "MM/dd/yyyy");
+    odata.getRange('A' + (i + 2)).setValue(ictDate);
+  }
+}
+//******************************************************** */
+function updateOdata_OPL() {
+  // Get the Setup sheet
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var setup = ss.getSheetByName("Setup");
+  // Get the current username
+  var nameCell = setup.getRange('B1');
+  var pwdCell = setup.getRange('B2');
+  var urlCell = setup.getRange('B8');
+  var name = nameCell.getValue();
+  var pwd = pwdCell.getValue();
+  pwd = Utilities.base64Decode(pwd);
+  pwd = Utilities.newBlob(pwd).getDataAsString()
+  var id = ss.getId();
+  pwd = pwd.slice(id.length);
+  var url = urlCell.getValue();
+  // Get the OData raw data sheet
+  var odata = ss.getSheetByName("master_OPL");
+  var od = getJobHistory(nameCell.getValue(), pwd, urlCell.getValue());
+  if (od == undefined) return;
+  // Clear out old data
+  odata.getRange(1, 1, odata.getLastRow(), 41).clearContent();
+  var rawCell = odata.getRange(1, 2, od.length, od[0].length);
+  rawCell.setValues(od);
+  var lastRow = odata.getRange('D1').getDataRegion().getLastRow();
+  var range = odata.getRange('D2:D' + lastRow).getValues();
+  for (var i = 0; i < range.length; i++) {
+    var originalDate = range[i][0];
+    var date = new Date(originalDate);
+    var ictDate = Utilities.formatDate(date, "GMT+7", "MM/dd/yyyy");
+    odata.getRange('A' + (i + 2)).setValue(ictDate);
+  }
+}
+
+//******************************************************** */
+function updateOdata_AMXE() {
+  // Get the Setup sheet
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var setup = ss.getSheetByName("Setup");
+  // Get the current username
+  var nameCell = setup.getRange('B1');
+  var pwdCell = setup.getRange('B2');
+  var urlCell = setup.getRange('B9');
+  var name = nameCell.getValue();
+  var pwd = pwdCell.getValue();
+  pwd = Utilities.base64Decode(pwd);
+  pwd = Utilities.newBlob(pwd).getDataAsString()
+  var id = ss.getId();
+  pwd = pwd.slice(id.length);
+  var url = urlCell.getValue();
+  // Get the OData raw data sheet
+  var odata = ss.getSheetByName("AM_XE");
+  var od = getJobHistory(nameCell.getValue(), pwd, urlCell.getValue());
+  if (od == undefined) return;
+  // Clear out old data
+  odata.getRange(1, 1, odata.getLastRow(), 66).clearContent();
+  var rawCell = odata.getRange(1, 2, od.length, od[0].length);
+  rawCell.setValues(od);
+  var lastRow = odata.getRange('D1').getDataRegion().getLastRow();
+  var range = odata.getRange('D2:D' + lastRow).getValues();
+  for (var i = 0; i < range.length; i++) {
+    var originalDate = range[i][0];
+    var date = new Date(originalDate);
+    var ictDate = Utilities.formatDate(date, "GMT+7", "MM/dd/yyyy ");
+    odata.getRange('A' + (i + 2)).setValue(ictDate);
+  }
+}
+//******************************************************** */
+function updateOdata_AMRACK() {
+  // Get the Setup sheet
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var setup = ss.getSheetByName("Setup");
+  // Get the current username
+  var nameCell = setup.getRange('B1');
+  var pwdCell = setup.getRange('B2');
+  var urlCell = setup.getRange('B10');
+  var name = nameCell.getValue();
+  var pwd = pwdCell.getValue();
+  pwd = Utilities.base64Decode(pwd);
+  pwd = Utilities.newBlob(pwd).getDataAsString()
+  var id = ss.getId();
+  pwd = pwd.slice(id.length);
+  var url = urlCell.getValue();
+  // Get the OData raw data sheet
+  var odata = ss.getSheetByName("AM_RACK");
+  var od = getJobHistory(nameCell.getValue(), pwd, urlCell.getValue());
+  if (od == undefined) return;
+  // Clear out old data
+  odata.getRange(1, 1, odata.getLastRow(), 44).clearContent();
+  var rawCell = odata.getRange(1, 2, od.length, od[0].length);
+  rawCell.setValues(od);
+  var lastRow = odata.getRange('D1').getDataRegion().getLastRow();
+  var range = odata.getRange('D2:D' + lastRow).getValues();
+  for (var i = 0; i < range.length; i++) {
+    var originalDate = range[i][0];
+    var date = new Date(originalDate);
+    var ictDate = Utilities.formatDate(date, "GMT+7", "MM/dd/yyyy ");
+    odata.getRange('A' + (i + 2)).setValue(ictDate);
+  }
+}
+
+//******************************************************** */
+function updateOdata_AMDOCK() {
+  // Get the Setup sheet
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var setup = ss.getSheetByName("Setup");
+  // Get the current username
+  var nameCell = setup.getRange('B1');
+  var pwdCell = setup.getRange('B2');
+  var urlCell = setup.getRange('B11');
+  var name = nameCell.getValue();
+  var pwd = pwdCell.getValue();
+  pwd = Utilities.base64Decode(pwd);
+  pwd = Utilities.newBlob(pwd).getDataAsString()
+  var id = ss.getId();
+  pwd = pwd.slice(id.length);
+  var url = urlCell.getValue();
+  // Get the OData raw data sheet
+  var odata = ss.getSheetByName("AM_DOCK");
+  var od = getJobHistory(nameCell.getValue(), pwd, urlCell.getValue());
+  if (od == undefined) return;
+  // Clear out old data
+  odata.getRange(1, 1, odata.getLastRow(), 49).clearContent();
+  var rawCell = odata.getRange(1, 2, od.length, od[0].length);
+  rawCell.setValues(od);
+  var lastRow = odata.getRange('D1').getDataRegion().getLastRow();
+  var range = odata.getRange('D2:D' + lastRow).getValues();
+  for (var i = 0; i < range.length; i++) {
+    var originalDate = range[i][0];
+    var date = new Date(originalDate);
+    var ictDate = Utilities.formatDate(date, "GMT+7", "MM/dd/yyyy ");
+    odata.getRange('A' + (i + 2)).setValue(ictDate);
+  }
+}
+
+//******************************************************** */
+function updateOdata_AMKSB() {
+  // Get the Setup sheet
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var setup = ss.getSheetByName("Setup");
+  // Get the current username
+  var nameCell = setup.getRange('B1');
+  var pwdCell = setup.getRange('B2');
+  var urlCell = setup.getRange('B12');
+  var name = nameCell.getValue();
+  var pwd = pwdCell.getValue();
+  pwd = Utilities.base64Decode(pwd);
+  pwd = Utilities.newBlob(pwd).getDataAsString()
+  var id = ss.getId();
+  pwd = pwd.slice(id.length);
+  var url = urlCell.getValue();
+  // Get the OData raw data sheet
+  var odata = ss.getSheetByName("AM KHU SẠC BÌNH");
+  var od = getJobHistory(nameCell.getValue(), pwd, urlCell.getValue());
+  if (od == undefined) return;
+  // Clear out old data
+  odata.getRange(1, 1, odata.getLastRow(), 43).clearContent();
+  var rawCell = odata.getRange(1, 2, od.length, od[0].length);
+  rawCell.setValues(od);
+  var lastRow = odata.getRange('D1').getDataRegion().getLastRow();
+  var range = odata.getRange('D2:D' + lastRow).getValues();
+  for (var i = 0; i < range.length; i++) {
+    var originalDate = range[i][0];
+    var date = new Date(originalDate);
+    var ictDate = Utilities.formatDate(date, "GMT+7", "MM/dd/yyyy ");
+    odata.getRange('A' + (i + 2)).setValue(ictDate);
+  }
+}
+//******************************************************** */
+function updateOdata_AmPhuTro() {
+  // Get the Setup sheet
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var setup = ss.getSheetByName("Setup");
+  // Get the current username
+  var nameCell = setup.getRange('B1');
+  var pwdCell = setup.getRange('B2');
+  var urlCell = setup.getRange('B13');
+  var name = nameCell.getValue();
+  var pwd = pwdCell.getValue();
+  pwd = Utilities.base64Decode(pwd);
+  pwd = Utilities.newBlob(pwd).getDataAsString()
+  var id = ss.getId();
+  pwd = pwd.slice(id.length);
+  var url = urlCell.getValue();
+  // Get the OData raw data sheet
+  var odata = ss.getSheetByName("THIET BI PHU TRO");
+  var od = getJobHistory(nameCell.getValue(), pwd, urlCell.getValue());
+  if (od == undefined) return;
+  // Clear out old data
+  odata.getRange(1, 1, odata.getLastRow(), 26).clearContent();
+  var rawCell = odata.getRange(1, 2, od.length, od[0].length);
+  rawCell.setValues(od);
+  var lastRow = odata.getRange('D1').getDataRegion().getLastRow();
+  var range = odata.getRange('D2:D' + lastRow).getValues();
+  for (var i = 0; i < range.length; i++) {
+    var originalDate = range[i][0];
+    var date = new Date(originalDate);
+    var ictDate = Utilities.formatDate(date, "GMT+7", "MM/dd/yyyy");
+    odata.getRange('A' + (i + 2)).setValue(ictDate);
+  }
+}
+//******************************************************** */
+function updateOdata_XeNangPhuy() {
+  // Get the Setup sheet
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var setup = ss.getSheetByName("Setup");
+  // Get the current username
+  var nameCell = setup.getRange('B1');
+  var pwdCell = setup.getRange('B2');
+  var urlCell = setup.getRange('B14');
+  var name = nameCell.getValue();
+  var pwd = pwdCell.getValue();
+  pwd = Utilities.base64Decode(pwd);
+  pwd = Utilities.newBlob(pwd).getDataAsString()
+  var id = ss.getId();
+  pwd = pwd.slice(id.length);
+  var url = urlCell.getValue();
+  // Get the OData raw data sheet
+  var odata = ss.getSheetByName("Xe nâng phuy");
+  var od = getJobHistory(nameCell.getValue(), pwd, urlCell.getValue());
+  if (od == undefined) return;
+  // Clear out old data
+  odata.getRange(1, 1, odata.getLastRow(), 26).clearContent();
+  var rawCell = odata.getRange(1, 2, od.length, od[0].length);
+  rawCell.setValues(od);
+  var lastRow = odata.getRange('D1').getDataRegion().getLastRow();
+  var range = odata.getRange('D2:D' + lastRow).getValues();
+  for (var i = 0; i < range.length; i++) {
+    var originalDate = range[i][0];
+    var date = new Date(originalDate);
+    var ictDate = Utilities.formatDate(date, "GMT+7", "MM/dd/yyyy");
+    odata.getRange('A' + (i + 2)).setValue(ictDate);
+  }
+}
+//******************************************************** */
+
+function updateOdata_XeNang() {
+  // Get the Setup sheet
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var setup = ss.getSheetByName("Setup");
+  // Get the current username
+  var nameCell = setup.getRange('B1');
+  var pwdCell = setup.getRange('B2');
+  var urlCell = setup.getRange('B15');
+  var name = nameCell.getValue();
+  var pwd = pwdCell.getValue();
+  pwd = Utilities.base64Decode(pwd);
+  pwd = Utilities.newBlob(pwd).getDataAsString()
+  var id = ss.getId();
+  pwd = pwd.slice(id.length);
+  var url = urlCell.getValue();
+  // Get the OData raw data sheet
+  var odata = ss.getSheetByName("Xe nâng");
+  var od = getJobHistory(nameCell.getValue(), pwd, urlCell.getValue());
+  if (od == undefined) return;
+  // Clear out old data
+  odata.getRange(1, 1, odata.getLastRow(), 104).clearContent();
+  var rawCell = odata.getRange(1, 4, od.length, od[0].length);
+  rawCell.setValues(od);
+  var lastRow = odata.getRange('F1').getDataRegion().getLastRow();
+  var rangeDateStart = odata.getRange('F2:F' + lastRow).getValues();
+  var rangeEndStart = odata.getRange('G2:G' + lastRow).getValues();
+  for (var i = 0; i < rangeDateStart.length; i++) {
+    var originalDate = rangeDateStart[i][0];
+    var originalTimeStart = rangeEndStart[i][0];
+    var date = new Date(originalDate);
+    var endTime = new Date(originalTimeStart)
+    var ictDate = Utilities.formatDate(date, "GMT+7", "MM/dd/yyyy");
+    var ictStartTime = Utilities.formatDate(date, "GMT+7", "HH:mm:ss");
+    var ictEndTime = Utilities.formatDate(endTime, "GMT+7", "HH:mm:ss");
+    odata.getRange('A' + (i + 2)).setValue(ictDate);
+    odata.getRange('B' + (i + 2)).setValue(ictStartTime);
+    odata.getRange('C' + (i + 2)).setValue(ictEndTime);
+  }
+}
+
+//******************************************************** */
+
+// function updateOdata_Rack() {
+//   // Get the Setup sheet
+//   var ss = SpreadsheetApp.getActiveSpreadsheet();
+//   var setup = ss.getSheetByName("Setup");
+//   // Get the current username
+//   var nameCell = setup.getRange('B1');
+//   var pwdCell = setup.getRange('B2');
+//   var urlCell = setup.getRange('B16');
+//   var name = nameCell.getValue();
+//   var pwd = pwdCell.getValue();
+//   pwd = Utilities.base64Decode(pwd);
+//   pwd = Utilities.newBlob(pwd).getDataAsString()
+//   var id = ss.getId();
+//   pwd = pwd.slice(id.length);
+//   var url = urlCell.getValue();
+//   // Get the OData raw data sheet
+//   var odata = ss.getSheetByName("Rack");
+//   var od = getJobHistory(nameCell.getValue(), pwd, urlCell.getValue());
+//   if (od == undefined) return;
+//   // Clear out old data
+//   odata.getRange(1, 1, odata.getLastRow(), 67).clearContent();
+//   var rawCell = odata.getRange(1, 2, od.length, od[0].length);
+//   rawCell.setValues(od);
+//   var lastRow = odata.getRange('D1').getDataRegion().getLastRow();
+//   var range = odata.getRange('D2:D' + lastRow).getValues();
+//   for (var i = 0; i < range.length; i++) {
+//     var originalDate = range[i][0];
+//     var date = new Date(originalDate);
+//     var ictDate = Utilities.formatDate(date, "GMT+7", "MM/dd/yyyy");
+//     odata.getRange('A' + (i + 2)).setValue(ictDate);
+//   }
+// }
+
+//******************************************************** */
+
+function updateOdata_Rack() {
+  // Get the Setup sheet
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var setup = ss.getSheetByName("Setup");
+  // Get the current username
+  var nameCell = setup.getRange('B1');
+  var pwdCell = setup.getRange('B2');
+  var urlCell = setup.getRange('B16');
+  var name = nameCell.getValue();
+  var pwd = pwdCell.getValue();
+  pwd = Utilities.base64Decode(pwd);
+  pwd = Utilities.newBlob(pwd).getDataAsString()
+  var id = ss.getId();
+  pwd = pwd.slice(id.length);
+  var url = urlCell.getValue();
+  // Get the OData raw data sheet
+  var odata = ss.getSheetByName("Rack");
+  var od = getJobHistory(nameCell.getValue(), pwd, urlCell.getValue());
+  if (od == undefined) return;
+  // Clear out old data
+  odata.getRange(1, 1, odata.getLastRow(), 69).clearContent();
+  var rawCell = odata.getRange(1, 4, od.length, od[0].length);
+  rawCell.setValues(od);
+  var lastRow = odata.getRange('F1').getDataRegion().getLastRow();
+  var rangeDateStart = odata.getRange('F2:F' + lastRow).getValues();
+  var rangeEndStart = odata.getRange('G2:G' + lastRow).getValues();
+  for (var i = 0; i < rangeDateStart.length; i++) {
+    var originalDate = rangeDateStart[i][0];
+    var originalTimeStart = rangeEndStart[i][0];
+    var date = new Date(originalDate);
+    var endTime = new Date(originalTimeStart)
+    var ictDate = Utilities.formatDate(date, "GMT+7", "MM/dd/yyyy");
+    var ictStartTime = Utilities.formatDate(date, "GMT+7", "HH:mm:ss");
+    var ictEndTime = Utilities.formatDate(endTime, "GMT+7", "HH:mm:ss");
+    odata.getRange('A' + (i + 2)).setValue(ictDate);
+    odata.getRange('B' + (i + 2)).setValue(ictStartTime);
+    odata.getRange('C' + (i + 2)).setValue(ictEndTime);
+  }
+}
+//******************************************************** */
+function updateOdata_BonRuanmat() {
+  // Get the Setup sheet
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var setup = ss.getSheetByName("Setup");
+  // Get the current username
+  var nameCell = setup.getRange('B1');
+  var pwdCell = setup.getRange('B2');
+  var urlCell = setup.getRange('B17');
+  var name = nameCell.getValue();
+  var pwd = pwdCell.getValue();
+  pwd = Utilities.base64Decode(pwd);
+  pwd = Utilities.newBlob(pwd).getDataAsString()
+  var id = ss.getId();
+  pwd = pwd.slice(id.length);
+  var url = urlCell.getValue();
+  // Get the OData raw data sheet
+  var odata = ss.getSheetByName("Bon_rua_mat");
+  var od = getJobHistory(nameCell.getValue(), pwd, urlCell.getValue());
+  if (od == undefined) return;
+  // Clear out old data
+  odata.getRange(1, 1, odata.getLastRow(), 49).clearContent();
+  var rawCell = odata.getRange(1, 2, od.length, od[0].length);
+  rawCell.setValues(od);
+  var lastRow = odata.getRange('D1').getDataRegion().getLastRow();
+  var range = odata.getRange('D2:D' + lastRow).getValues();
+  for (var i = 0; i < range.length; i++) {
+    var originalDate = range[i][0];
+    var date = new Date(originalDate);
+    var ictDate = Utilities.formatDate(date, "GMT+7", "MM/dd/yyyy");
+    odata.getRange('A' + (i + 2)).setValue(ictDate);
+  }
+}
+
+//******************************************************** */
+function updateOdata_palletGo() {
+  // Get the Setup sheet
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var setup = ss.getSheetByName("Setup");
+  // Get the current username
+  var nameCell = setup.getRange('B1');
+  var pwdCell = setup.getRange('B2');
+  var urlCell = setup.getRange('B18');
+  var name = nameCell.getValue();
+  var pwd = pwdCell.getValue();
+  pwd = Utilities.base64Decode(pwd);
+  pwd = Utilities.newBlob(pwd).getDataAsString()
+  var id = ss.getId();
+  pwd = pwd.slice(id.length);
+  var url = urlCell.getValue();
+  // Get the OData raw data sheet
+  var odata = ss.getSheetByName("Pallet gỗ");
+  var od = getJobHistory(nameCell.getValue(), pwd, urlCell.getValue());
+  if (od == undefined) return;
+  // Clear out old data
+  odata.getRange(1, 1, odata.getLastRow(), 43).clearContent();
+  var rawCell = odata.getRange(1, 2, od.length, od[0].length);
+  rawCell.setValues(od);
+  var lastRow = odata.getRange('D1').getDataRegion().getLastRow();
+  var range = odata.getRange('D2:D' + lastRow).getValues();
+  for (var i = 0; i < range.length; i++) {
+    var originalDate = range[i][0];
+    var date = new Date(originalDate);
+    var ictDate = Utilities.formatDate(date, "GMT+7", "MM/dd/yyyy");
+    odata.getRange('A' + (i + 2)).setValue(ictDate);
+  }
+}
+
